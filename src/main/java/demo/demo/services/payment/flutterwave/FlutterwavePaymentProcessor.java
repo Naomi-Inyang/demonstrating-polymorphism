@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
@@ -33,9 +34,13 @@ import org.json.JSONObject;
 @Component
 @Primary
 public class FlutterwavePaymentProcessor implements PaymentProcessor {
+    @Value("${FLUTTERWAVE_SECRET_KEY}")
+    private static String secretKey;
+    
+    @Value("${FLUTTERWAVE_ENCRYPTION_KEY}")
+    private static String encryptionKey;
+
     private static final String BASE_URL = "https://api.flutterwave.com/v3";
-    private static final String secretKey = "FLWSECK_TEST-83d906ae50ce91462500a5881ee30abd-X";
-    private static final String encryptionKey = "FLWSECK_TEST8851f5a9619";
     private static final String ENCRYPTION_ALGORITHM = "DESede";
     private static final String ENCRYPTION_TRANSFORMATION = "DESede/ECB/PKCS5Padding";
 
@@ -43,6 +48,8 @@ public class FlutterwavePaymentProcessor implements PaymentProcessor {
 
     @Override
     public PaymentResponse<?> initializeBankTransferPayment(BankTransferPaymentRequest request) {
+        System.out.println(encryptionKey);
+
         Map<String, Object> requestBody = PaymentRequestMapper.mapToFlutterwaveBankTransferFormat(request);
 
         RequestBodySpec requestBodySpec = generateRequestBodySpecification(PaymentMethod.BANK_TRANSFER.name().toLowerCase());
