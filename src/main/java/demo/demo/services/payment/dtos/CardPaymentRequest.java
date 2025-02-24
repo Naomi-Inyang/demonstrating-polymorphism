@@ -3,47 +3,51 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import demo.demo.services.payment.enums.PaymentMethod;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PaymentRequest {
-    @NotBlank
-    private double amount;
+public class CardPaymentRequest {
+    @NotNull
+    @Positive
+    private BigInteger amount;
 
     @NotBlank
     private String currency;
-
-    @NotBlank
-    private PaymentMethod paymentMethod; 
 
     @NotBlank
     @Email
     private String email; 
 
     @NotBlank
-    private String phoneNumber; 
-    
-    // Card Payment Fields
     private String cardNumber;
+
+    @NotBlank
     private String cvv;
+
+    @NotBlank
     private String expiryMonth;
+
+    @NotBlank
     private String expiryYear;
 
-    // Bank Transfer Fields
-    private String senderAccount;
-    private String receiverAccount;
+    // // Bank Transfer Fields
+    // private String senderAccount;
+    // private String receiverAccount;
     
-    // Digital Wallet Fields
-    private String walletId;
+    // // Digital Wallet Fields
+    // private String walletId;
     
-    private String narration; 
+    // private String narration; 
 }

@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.demo.services.payment.PaymentService;
-import demo.demo.services.payment.dtos.PaymentRequest;
+import demo.demo.services.payment.dtos.BankTransferPaymentRequest;
+import demo.demo.services.payment.dtos.CardPaymentRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -17,9 +18,14 @@ import lombok.AllArgsConstructor;
 public class PaymentController {
     private final PaymentService paymentService;
 
-    @PostMapping("/charge")
-    public ResponseEntity<?> chargeUser(@Valid @RequestBody PaymentRequest request) {
-        return ResponseEntity.ok(paymentService.chargeUser(request));
+    @PostMapping("/card")
+    public ResponseEntity<?> initiateCardTransfer(@Valid @RequestBody CardPaymentRequest request) {
+        return ResponseEntity.ok(paymentService.initiateCardPayment(request));
+    }
+
+    @PostMapping("/bank_transfer")
+    public ResponseEntity<?> initiateBankTransfer(@Valid @RequestBody BankTransferPaymentRequest request) {
+        return ResponseEntity.ok(paymentService.initiateBankTransferPayment(request));
     }
     
 }
