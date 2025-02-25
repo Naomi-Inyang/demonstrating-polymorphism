@@ -27,7 +27,6 @@ import org.springframework.http.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
-
 import org.json.JSONObject;
 
 @RequiredArgsConstructor
@@ -48,8 +47,6 @@ public class FlutterwavePaymentProcessor implements PaymentProcessor {
 
     @Override
     public PaymentResponse<?> initializeBankTransferPayment(BankTransferPaymentRequest request) {
-        System.out.println(encryptionKey);
-
         Map<String, Object> requestBody = PaymentRequestMapper.mapToFlutterwaveBankTransferFormat(request);
 
         RequestBodySpec requestBodySpec = generateRequestBodySpecification(PaymentMethod.BANK_TRANSFER.name().toLowerCase());
